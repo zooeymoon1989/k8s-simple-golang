@@ -12,7 +12,7 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		id, _ := os.Hostname()
 		host := c.Request.Host
-		c.String(http.StatusOK, fmt.Sprintf("hello from node , the host address is: %s, and the hostname is: %s", host, id))
+		c.String(http.StatusOK, fmt.Sprintf("hello from go-gin , the host address is: %s, and the hostname is: %s", host, id))
 	})
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
