@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/autotls"
+	"golang.org/x/crypto/acme/autocert"
+	"log"
 	"net/http"
 	"os"
 
@@ -11,7 +14,13 @@ import (
 
 func main() {
 	r := setupRouter()
-	r.Run(":80") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	m := autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		HostPolicy: autocert.HostWhitelist("liwenqiang.site"),
+		Cache:      autocert.DirCache("/var/www/.cache"),
+	}
+	log.Fatal(autotls.RunWithManager(r, &m))
+	//r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
 func setupRouter() *gin.Engine {
