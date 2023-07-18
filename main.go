@@ -10,6 +10,11 @@ import (
 )
 
 func main() {
+	r := setupRouter()
+	r.Run(":80") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+}
+
+func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
 		id, _ := os.Hostname()
@@ -22,5 +27,5 @@ func main() {
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
-	r.Run(":80") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	return r
 }
