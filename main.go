@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"k8s-simple-golang/actions"
+	"net/http"
+	"os"
 )
 
 func main() {
@@ -21,7 +21,8 @@ func setupRouter() *gin.Engine {
 		host := c.Request.Host
 		c.String(http.StatusOK, fmt.Sprintf("hello from go-gin , the host address is: %s, and the hostname is: %s", host, id))
 	})
-
+	r.GET("/reviews/:id", actions.GetReviews)
+	r.GET("/reviews", actions.GetReviews)
 	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	r.GET("/ping", func(c *gin.Context) {
