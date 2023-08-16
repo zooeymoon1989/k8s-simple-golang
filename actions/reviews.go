@@ -8,12 +8,14 @@ import (
 	reviews "k8s-simple-golang/pb"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func GetReviews(c *gin.Context) {
+	now := time.Now()
 	id := c.Param("id")
 	i, _ := strconv.Atoi(id)
-	conn, err := grpc.Dial("liwenqiang.site:19999", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("mysql-grpc-server:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		c.JSONP(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -33,6 +35,8 @@ func GetReviews(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"movies": reviewList.Reviews,
+		"movies":    reviewList.Reviews,
+		"time uses": time.Since(now).String(),
+		"host":      c.Request.Host,
 	})
 }
