@@ -7,6 +7,7 @@ import (
 	"google.golang.org/protobuf/types/known/wrapperspb"
 	reviews "k8s-simple-golang/pb"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -34,9 +35,10 @@ func GetReviews(c *gin.Context) {
 		})
 		return
 	}
+	hostname, _ := os.Hostname()
 	c.JSON(http.StatusOK, gin.H{
-		"movies":    reviewList.Reviews,
-		"time uses": time.Since(now).String(),
-		"host":      c.Request.Host,
+		"movies":       reviewList.Reviews,
+		"time uses":    time.Since(now).String(),
+		"container_id": hostname,
 	})
 }
