@@ -5,4 +5,5 @@ type Config struct {
 	GrpcMysqlPort string `mapstructure:"GRPC_MYSQL_PORT"`
 	ServerAddr    string `mapstructure:"SERVER_ADDR"`
 	ReviewAddr    string `mapstructure:"REVIEW_ADDR"`
+	JaegerAddr    string `mapstructure:"JAEGER_ADDR"`
 }
