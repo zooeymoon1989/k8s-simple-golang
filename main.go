@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/spf13/viper"
 	"k8s-simple-golang/actions"
 	"k8s-simple-golang/config"
 	"net/http"
 	"os"
+
+	"github.com/bytedance/gopkg/util/logger"
+	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -54,7 +56,7 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("fatal error Unmarshal file: %s", err))
 	}
-	r.Run(":80") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	logger.Error(r.Run(":80")) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
 func setupRouter() *gin.Engine {
